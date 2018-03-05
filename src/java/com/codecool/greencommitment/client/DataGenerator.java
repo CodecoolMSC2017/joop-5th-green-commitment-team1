@@ -5,11 +5,13 @@ import java.util.Random;
 public class DataGenerator {
     Random rand = new Random();
 
-    public float measureThermo() {
+    public String measureThermo() {
+        XMLWriter XMLW = new XMLWriter();
         Float minValue = -20.0f;
         Float maxValue = 38.0f;
         Float currentTemp = rand.nextFloat() * (maxValue - minValue) + minValue;
-        return currentTemp;
+        return Float.toString(currentTemp);
+
 
 
     }
