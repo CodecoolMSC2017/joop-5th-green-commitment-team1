@@ -9,12 +9,10 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 // Client class
-public class Client
-{
-    public static void runClient(String[] args) throws IOException
-    {
-        try
-        {
+public class Client {
+    public static void runClient(String[] args) throws IOException {
+        try {
+            XMLWriter XMLW = new XMLWriter();
             Scanner scn = new Scanner(System.in);
             DataGenerator dg = new DataGenerator();
             GetMac gm = new GetMac();
@@ -31,23 +29,17 @@ public class Client
 
             // the following loop performs the exchange of
             // information between client and client handler
-            while (true)
-            {
+            while (true) {
                 System.out.println(gm.getMacAddress());
                 System.out.println(dis.readUTF());
-                String tosend = dg.measureThermo();
-                dos.writeUTF(tosend);
+                String therm = dg.measureThermo();
+                dos.writeUTF(therm);
                 TimeUnit.SECONDS.sleep(3);
+                XMLW.saveToXML("clientData.xml", Long.toString(System.currentTimeMillis()), therm, "Celsius");
 
                 // If client sends exit,close this connection
                 // and then break from the while loop
-                if(tosend.equals("Exit"))
-                {
-                    System.out.println("Closing this connection : " + s);
-                    s.close();
-                    System.out.println("Connection closed");
-                    break;
-                }
+
 
                 // printing date or time as requested by client
                 String received = dis.readUTF();
@@ -55,10 +47,11 @@ public class Client
             }
 
             // closing resources
-            scn.close();
+            /*scn.close();
             dis.close();
             dos.close();
-        }catch(Exception e){
+        */
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
