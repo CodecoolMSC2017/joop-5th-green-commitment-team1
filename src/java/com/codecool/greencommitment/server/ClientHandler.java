@@ -1,7 +1,11 @@
 package com.codecool.greencommitment.server;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.text.DateFormat;
@@ -23,6 +27,15 @@ public class ClientHandler extends Thread {
         this.s = s;
         this.dis = dis;
         this.dos = dos;
+
+        try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("/home/robertn/Documents/java_develop/git_repos/Green_Commitment/joop-5th-green-commitment-team1/src/java/com/codecool/greencommitment/server/horn.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
