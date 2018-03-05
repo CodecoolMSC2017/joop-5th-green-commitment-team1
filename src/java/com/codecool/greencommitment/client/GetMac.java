@@ -17,15 +17,20 @@ public class GetMac {
             ip = InetAddress.getLocalHost();
 
             NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+            if (network != null) {
 
-            byte[] mac = network.getHardwareAddress();
+                byte[] mac = network.getHardwareAddress();
 
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < mac.length; i++) {
-                sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < mac.length; i++) {
+                    sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+                }
+
+                macAddr = sb.toString();
             }
-
-            macAddr = sb.toString();
+            else {
+                return "mac address not found";
+            }
 
 
         } catch (UnknownHostException e) {
