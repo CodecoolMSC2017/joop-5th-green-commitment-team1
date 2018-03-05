@@ -35,7 +35,7 @@ public class Client
             {
                 System.out.println(gm.getMacAddress());
                 System.out.println(dis.readUTF());
-                String tosend = Float.toString(dg.measureThermo());
+                String tosend = dg.measureThermo();
                 dos.writeUTF(tosend);
                 TimeUnit.SECONDS.sleep(3);
 

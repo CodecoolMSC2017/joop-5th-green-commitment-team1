@@ -86,6 +86,8 @@ public class ClientHandler extends Thread {
                         break;
                 }*/
                 System.out.println(received);
+                toreturn = "OK";
+                dos.writeUTF(toreturn);
             } catch (Exception e) {
                 try {
                     this.dis.close();
