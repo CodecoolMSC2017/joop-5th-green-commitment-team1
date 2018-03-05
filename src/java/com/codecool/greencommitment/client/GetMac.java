@@ -11,7 +11,6 @@ public class GetMac {
         String macAddr = "";
 
         try {
-
             Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
             while(networkInterfaces.hasMoreElements())
             {
@@ -19,7 +18,7 @@ public class GetMac {
                 byte[] mac = network.getHardwareAddress();
                 if(mac == null)
                 {
-                    System.out.println("null mac");
+                    continue;
                 }
                 else
                 {
@@ -33,11 +32,8 @@ public class GetMac {
                 }
             }
         } catch (SocketException e){
-
             e.printStackTrace();
-
         }
-
         return macAddr;
     }
 }

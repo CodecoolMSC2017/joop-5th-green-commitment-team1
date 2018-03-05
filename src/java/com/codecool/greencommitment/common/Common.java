@@ -6,7 +6,7 @@ import com.codecool.greencommitment.server.*;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class common {
+public class Common {
 
     public static void main(String[] args) throws IOException {
 
