@@ -1,9 +1,8 @@
 package com.codecool.greencommitment.client;
 
-import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.util.Enumeration;
 
 public class GetMac {
 
@@ -11,28 +10,32 @@ public class GetMac {
 
         String macAddr = "";
 
-        InetAddress ip;
         try {
 
-            ip = InetAddress.getLocalHost();
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while(networkInterfaces.hasMoreElements())
+            {
+                NetworkInterface network = networkInterfaces.nextElement();
+                byte[] mac = network.getHardwareAddress();
+                if(mac == null)
+                {
+                    System.out.println("null mac");
+                }
+                else
+                {
 
-            NetworkInterface network = NetworkInterface.getByInetAddress(ip);
-
-            byte[] mac = network.getHardwareAddress();
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < mac.length; i++) {
-                sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < mac.length; i++)
+                    {
+                        sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+                    }
+                    macAddr = sb.toString();
+                }
             }
+        } catch (SocketException e){
 
-            macAddr = sb.toString();
-
-
-        } catch (UnknownHostException e) {
             e.printStackTrace();
 
-        } catch (SocketException e) {
-            e.printStackTrace();
         }
 
         return macAddr;
