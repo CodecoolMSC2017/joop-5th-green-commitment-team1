@@ -12,22 +12,16 @@ import java.util.Scanner;
 // Client class
 public class Client
 {
-    public static void runClient() throws IOException
+    public static void runClient(String[] args) throws IOException
     {
         try
         {
             Scanner scn = new Scanner(System.in);
 
-            // getting localhost ip
-            byte[] ipAddr = {(byte)192,(byte)168,(byte)150,79};
-            String localhost = InetAddress.getLocalHost().getHostAddress();
-            InetAddress ip = InetAddress.getByAddress("server",ipAddr);
-            System.out.println(ip.getHostName());
-            System.out.println(ip.getHostAddress());
-            System.out.println("Localhost address: " + localhost);
+            // getting ip from command line argument
+            String ip = args[0];
+            
 
-
-            // establish the connection with server port 5056
             Socket s = new Socket(ip, 5056);
 
             // obtaining input and out streams
