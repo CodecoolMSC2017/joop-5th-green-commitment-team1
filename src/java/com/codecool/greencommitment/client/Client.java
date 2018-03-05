@@ -1,31 +1,28 @@
 package com.codecool.greencommitment.client;
 
-
-
 // Java implementation for a client
 // Save file as Client.java
 
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 // Client class
 public class Client
 {
-    public static void runClient() throws IOException
+    public static void runClient(String[] args) throws IOException
     {
         try
         {
             Scanner scn = new Scanner(System.in);
+            DataGenerator dg = new DataGenerator();
+            GetMac gm = new GetMac();
 
-            // getting localhost ip
-            byte[] ipAddr = {(byte)192,(byte)168,(byte)150,79};
-            InetAddress ip = InetAddress.getByAddress("server",ipAddr);
-            System.out.println(ip.getHostName());
-            System.out.println(ip.getHostAddress());
+            // getting ip from command line argument
+            String ip = args[0];
 
 
-            // establish the connection with server port 5056
             Socket s = new Socket(ip, 5056);
 
             // obtaining input and out streams
@@ -36,9 +33,11 @@ public class Client
             // information between client and client handler
             while (true)
             {
+                System.out.println(gm.getMacAddress());
                 System.out.println(dis.readUTF());
-                String tosend = scn.nextLine();
+                String tosend = Float.toString(dg.measureThermo());
                 dos.writeUTF(tosend);
+                TimeUnit.SECONDS.sleep(3);
 
                 // If client sends exit,close this connection
                 // and then break from the while loop

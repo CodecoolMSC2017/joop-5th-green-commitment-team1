@@ -1,7 +1,7 @@
 package com.codecool.greencommitment.common;
 
-import com.codecool.greencommitment.client.Client;
-import com.codecool.greencommitment.server.Server;
+import com.codecool.greencommitment.client.*;
+import com.codecool.greencommitment.server.*;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -12,14 +12,16 @@ public class common {
 
         Scanner scan = new Scanner(System.in);
         String scanString = scan.nextLine();
-        scan.close();
+
 
         if (scanString.equals("server")){
-            Server s = new Server();
-            s.runServer();
-        } else {
-            Client c = new Client();
-            c.runClient();
+            Server.runServer();
+
+        } else if(scanString.equals("client")) {
+            Client.runClient(args);
+
+        }else{
+            System.out.println("That's not an option");
         }
     }
 }

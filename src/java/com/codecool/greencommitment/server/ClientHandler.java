@@ -68,7 +68,7 @@ public class ClientHandler extends Thread {
 
                 // write on output stream based on the
                 // answer from the client
-                switch (received) {
+                /*switch (received) {
 
                     case "Date" :
                         toreturn = fordate.format(date);
@@ -83,7 +83,8 @@ public class ClientHandler extends Thread {
                     default:
                         dos.writeUTF("Invalid input");
                         break;
-                }
+                }*/
+                System.out.println(received);
             } catch (IOException e) {
                 e.printStackTrace();
             }
