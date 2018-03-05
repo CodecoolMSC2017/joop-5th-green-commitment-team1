@@ -1,4 +1,4 @@
-package com.codecool.greencommitment;
+package com.codecool.greencommitment.common;
 
 public class common {
 
