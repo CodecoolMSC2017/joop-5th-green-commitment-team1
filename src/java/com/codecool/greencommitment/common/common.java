@@ -12,13 +12,13 @@ public class common {
 
         Scanner scan = new Scanner(System.in);
         String scanString = scan.nextLine();
-        
+
 
         if (scanString.equals("server")){
             Server.runServer();
 
         } else if(scanString.equals("client")) {
-            Client.runClient();
+            Client.runClient(args);
 
         }else{
             System.out.println("That's not an option");
