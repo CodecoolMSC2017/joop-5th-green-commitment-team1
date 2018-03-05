@@ -10,49 +10,59 @@ import java.util.concurrent.TimeUnit;
 
 // Client class
 public class Client {
-    public static void runClient(String[] args) throws IOException {
-        try {
-            XMLWriter XMLW = new XMLWriter();
-            Scanner scn = new Scanner(System.in);
+
+    public static void runClient(String[] args) {
+
+        while(true){
             DataGenerator dg = new DataGenerator();
-            GetMac gm = new GetMac();
-
-            // getting ip from command line argument
-            String ip = args[0];
-
-
-            Socket s = new Socket(ip, 5056);
-
-            // obtaining input and out streams
-            DataInputStream dis = new DataInputStream(s.getInputStream());
-            DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-
-            // the following loop performs the exchange of
-            // information between client and client handler
-            while (true) {
-                System.out.println(gm.getMacAddress());
-                System.out.println(dis.readUTF());
-                String therm = dg.measureThermo();
-                dos.writeUTF(therm);
+            String therm = dg.measureThermo();
+            XMLWriter XMLW = new XMLWriter();
+            XMLW.saveToXML("clientData.xml",Long.toString(System.currentTimeMillis()),therm,"Celsius");
+            try {
                 TimeUnit.SECONDS.sleep(3);
-                XMLW.saveToXML("clientData.xml", Long.toString(System.currentTimeMillis()), therm, "Celsius");
-
-                // If client sends exit,close this connection
-                // and then break from the while loop
-
-
-                // printing date or time as requested by client
-                String received = dis.readUTF();
-                System.out.println(received);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            BufferedInputStream bis;
+            BufferedOutputStream bos;
+            int num;
+            byte[] byteArray;
+            File f = new File("clientData.xml");
+            String ip = args[0];
+            Socket s = null ;
+            try{
+                s = new Socket(ip,5056) ;
+                InputStream inStream = s.getInputStream() ;
+                OutputStream outStream = s.getOutputStream() ;
+                System.out.println("Connected to : " + s);
 
-            // closing resources
-            /*scn.close();
-            dis.close();
-            dos.close();
-        */
-        } catch (Exception e) {
-            e.printStackTrace();
+                BufferedReader inm = new BufferedReader(new InputStreamReader(inStream));
+                PrintWriter out = new PrintWriter(outStream, true /* autoFlush */);
+
+                for (String x : args) {
+
+                    out.println(f);
+                    long len = f.length();
+                    System.out.println(inm.readLine());
+                    System.out.println("Sent File length = " + len);
+
+                    //SENDFILE
+                    bis = new BufferedInputStream(new FileInputStream(f));
+                    bos = new BufferedOutputStream(s.getOutputStream( ));
+                    byteArray = new byte[8192];
+                    while ((num = bis.read(byteArray)) != -1){
+                        bos.write(byteArray,0,num);
+                    }
+
+                    bos.close();
+                    bis.close();
+
+                    System.out.println(inm.readLine());
+                }
+            }catch (Exception e) {
+                System.out.println(e) ;
+            }
         }
     }
+
 }
