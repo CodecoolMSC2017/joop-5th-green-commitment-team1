@@ -20,7 +20,7 @@ public class Client
 
             // getting ip from command line argument
             String ip = args[0];
-            
+
 
             Socket s = new Socket(ip, 5056);
 
