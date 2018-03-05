@@ -1,13 +1,12 @@
 package com.codecool.greencommitment.client;
 
-
-
 // Java implementation for a client
 // Save file as Client.java
 
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 // Client class
 public class Client
@@ -17,6 +16,7 @@ public class Client
         try
         {
             Scanner scn = new Scanner(System.in);
+            DataGenerator dg = new DataGenerator();
 
             // getting ip from command line argument
             String ip = args[0];
@@ -33,8 +33,9 @@ public class Client
             while (true)
             {
                 System.out.println(dis.readUTF());
-                String tosend = scn.nextLine();
+                String tosend = Float.toString(dg.measureThermo());
                 dos.writeUTF(tosend);
+                TimeUnit.SECONDS.sleep(15);
 
                 // If client sends exit,close this connection
                 // and then break from the while loop
