@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class ClientHandler extends Thread {
 
@@ -85,8 +86,14 @@ public class ClientHandler extends Thread {
                         break;
                 }*/
                 System.out.println(received);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                try {
+                    this.dis.close();
+                    this.dos.close();
+                    this.s.close();
+                } catch (IOException ne) {
+                    ne.printStackTrace();
+                }
             }
         }
 
