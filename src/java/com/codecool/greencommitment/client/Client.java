@@ -17,6 +17,7 @@ public class Client
         {
             Scanner scn = new Scanner(System.in);
             DataGenerator dg = new DataGenerator();
+            GetMac gm = new GetMac();
 
             // getting ip from command line argument
             String ip = args[0];
@@ -32,10 +33,11 @@ public class Client
             // information between client and client handler
             while (true)
             {
+                System.out.println(gm.getMacAddress());
                 System.out.println(dis.readUTF());
                 String tosend = Float.toString(dg.measureThermo());
                 dos.writeUTF(tosend);
-                TimeUnit.SECONDS.sleep(15);
+                TimeUnit.SECONDS.sleep(3);
 
                 // If client sends exit,close this connection
                 // and then break from the while loop

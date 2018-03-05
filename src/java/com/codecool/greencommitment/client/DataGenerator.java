@@ -5,10 +5,11 @@ import java.util.Random;
 public class DataGenerator {
     Random rand = new Random();
 
-    public void measureThermo() {
+    public float measureThermo() {
         Float minValue = -20.0f;
         Float maxValue = 38.0f;
         Float currentTemp = rand.nextFloat() * (maxValue - minValue) + minValue;
+        return currentTemp;
 
 
     }
