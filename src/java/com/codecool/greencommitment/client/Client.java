@@ -20,9 +20,11 @@ public class Client
 
             // getting localhost ip
             byte[] ipAddr = {(byte)192,(byte)168,(byte)150,79};
+            String localhost = InetAddress.getLocalHost().getHostAddress();
             InetAddress ip = InetAddress.getByAddress("server",ipAddr);
             System.out.println(ip.getHostName());
             System.out.println(ip.getHostAddress());
+            System.out.println("Localhost address: " + localhost);
 
 
             // establish the connection with server port 5056
