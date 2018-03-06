@@ -44,11 +44,6 @@ public class DOMCreater {
 
 
 
-
-            System.out.println(dom.getElementsByTagName("time").item(0).getTextContent());
-
-
-
         } catch (ParserConfigurationException pce) {
             System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce);
         }
