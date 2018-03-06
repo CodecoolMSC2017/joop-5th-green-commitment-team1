@@ -13,6 +13,13 @@ import java.util.concurrent.TimeUnit;
 public class Client {
 
     public static void runClient(String[] args) {
+        Socket s = null;
+        String ip = args[0];
+        try {
+            s = new Socket(ip,5056) ;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         while(true){
             //Creating the necessary objects
@@ -30,11 +37,11 @@ public class Client {
 
             //Setting up socket connection
             ObjectOutputStream oos;
-            String ip = args[0];
-            Socket s = null ;
+
+
 
             try{
-                s = new Socket(ip,5056) ;
+
                 OutputStream outStream = s.getOutputStream() ;
                 System.out.println("Connected to : " + s);
 

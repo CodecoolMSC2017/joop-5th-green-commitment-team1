@@ -50,7 +50,7 @@ public class ClientHandler extends Thread {
             System.out.println("Spawning " + i);
 
             try {
-                try {
+                
                     ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
                     OutputStream outStream = incoming.getOutputStream();
                     PrintWriter out = new PrintWriter(outStream, true /* autoFlush */);
@@ -61,9 +61,7 @@ public class ClientHandler extends Thread {
                     //RECIEVE and WRITE FILE
 
                     Document domRecieved = (Document) ois.readObject();
-                } finally {
-                    incoming.close();
-                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
