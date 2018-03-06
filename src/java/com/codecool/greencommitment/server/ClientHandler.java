@@ -10,10 +10,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
@@ -112,6 +109,7 @@ public class ClientHandler extends Thread {
 
                         DOMSource source = new DOMSource(finalDom);
                         StreamResult result = new StreamResult(f);
+                        transformer.setOutputProperty(OutputKeys.INDENT,"yes");
                         transformer.transform(source, result);
                     } catch (TransformerConfigurationException tce) {
                         System.out.println("* Transformer Factory error");

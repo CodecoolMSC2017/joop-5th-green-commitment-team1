@@ -21,7 +21,9 @@ public class Common {
             Server.runServer();
 
         } else if(scanString.equals("client")) {
-            Client.runClient(args);
+            System.out.println("How many measuerements you want to send ?");
+            int numOfMeasurements = scan.nextInt();
+            Client.runClient(args,numOfMeasurements);
 
         }else{
             System.out.println("That's not an option");

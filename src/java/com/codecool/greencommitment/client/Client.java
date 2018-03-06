@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class Client {
     private static int errorCounter = 1;
 
-    public static void runClient(String[] args) {
+    public static void runClient(String[] args,int numOfMeasurements) {
         int counter = 0;
         Socket s = null;
         String ip = args[0];
@@ -28,7 +28,7 @@ public class Client {
             ObjectOutputStream oos;
 
             String therm = "";
-            if (counter > 3) {
+            if (counter >= numOfMeasurements) {
                 therm = "Exit";
                 OutputStreamWriter osw=null;
                 try {
@@ -50,7 +50,7 @@ public class Client {
 
             //Waiting for 3 seconds before next send
             try {
-                TimeUnit.SECONDS.sleep(3);
+                TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
