@@ -4,17 +4,14 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class FileCollector {
-    private final String filepath;
-    private File folder;
     private File[] listOfFiles;
 
     public FileCollector(String filepath) {
-        this.filepath = filepath;
-        folder = new File(filepath);
+        File folder = new File(filepath);
         listOfFiles = folder.listFiles();
     }
 
-    public ArrayList<String> getFileNames() {
+    public ArrayList<String> getXMLFileNames() {
         ArrayList<String> fileNames = new ArrayList<String>();
         for (int i = 0; i < listOfFiles.length; i++) {
             String temp = listOfFiles[i].getName();
