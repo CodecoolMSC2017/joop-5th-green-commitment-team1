@@ -11,27 +11,33 @@ import java.util.concurrent.TimeUnit;
 
 // Client class
 public class Client {
+    private static int errorCounter = 1;
 
     public static void runClient(String[] args) {
         int counter = 0;
+        Socket s = null;
+        String ip = args[0];
+        try {
+            s = new Socket(ip, 5056);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        while(true){
+        while (true) {
             //Setting up socket connection
             ObjectOutputStream oos;
-            String ip = args[0];
-            Socket s = null ;
 
             String therm = "";
             if (counter > 3) {
                 therm = "Exit";
-                try{
-                    s = new Socket(ip,5056) ;
-                    oos = new ObjectOutputStream(s.getOutputStream( ));
+                try {
+                    s = new Socket(ip, 5056);
+                    oos = new ObjectOutputStream(s.getOutputStream());
                     oos.writeObject(therm);
-                }catch (Exception e) {
-                    System.out.println(e) ;
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
-            }else {
+            } else {
                 //Creating the necessary objects
                 DataGenerator dg = new DataGenerator();
                 therm = dg.measureThermo();
@@ -47,16 +53,34 @@ public class Client {
                 e.printStackTrace();
             }
 
-            try{
-                s = new Socket(ip,5056) ;
+            //Setting up socket connection
+
+            try {
+
+                OutputStream outStream = s.getOutputStream();
                 System.out.println("Connected to : " + s);
 
                 //SENDFILE
-                oos = new ObjectOutputStream(s.getOutputStream( ));
+                oos = new ObjectOutputStream(s.getOutputStream());
                 oos.writeObject(domToSend);
                 counter++;
-            }catch (Exception e) {
-                System.out.println(e) ;
+            } catch (SocketException e) {
+                if (errorCounter >= 3) {
+                    System.out.println("\nUnable to connect to the server, the program has been termianted");
+                    System.exit(-1);
+                } else {
+                    System.out.println("\nError, the server's socket is closed, attempting to reconnect");
+                }
+                errorCounter++;
+            } catch (UnknownHostException e) {
+                System.out.println("Unknow host");
+                System.exit(-2);
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found by the Client");
+                System.exit(-3);
+            } catch (IOException e) {
+                System.out.println("IOException at the Client side");
+                System.exit(-4);
             }
         }
     }

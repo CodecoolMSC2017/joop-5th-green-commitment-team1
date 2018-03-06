@@ -39,7 +39,7 @@ public class ClientHandler extends Thread {
 
     @Override
     public void run() {
-        
+
         int i = 1;
         Socket incoming = s;
         System.out.println("Spawning " + i);
@@ -49,7 +49,6 @@ public class ClientHandler extends Thread {
                 ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
                 OutputStream outStream = incoming.getOutputStream();
                 PrintWriter out = new PrintWriter(outStream, true /* autoFlush */);
-
 
                 out.println("Object received ");
 
