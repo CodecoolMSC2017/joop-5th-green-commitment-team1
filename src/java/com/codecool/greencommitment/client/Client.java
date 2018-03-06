@@ -14,13 +14,37 @@ public class Client {
     private static int errorCounter = 1;
 
     public static void runClient(String[] args) {
+        int counter = 0;
+        Socket s = null;
+        String ip = args[0];
+        try {
+            s = new Socket(ip, 5056);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        while(true){
-            //Creating the necessary objects
-            DataGenerator dg = new DataGenerator();
-            String therm = dg.measureThermo();
+        while (true) {
+            //Setting up socket connection
+            ObjectOutputStream oos;
+
+            String therm = "";
+            if (counter > 3) {
+                therm = "Exit";
+                try {
+                    s = new Socket(ip, 5056);
+                    oos = new ObjectOutputStream(s.getOutputStream());
+                    oos.writeObject(therm);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            } else {
+                //Creating the necessary objects
+                DataGenerator dg = new DataGenerator();
+                therm = dg.measureThermo();
+            }
+
             DOMCreater dc = new DOMCreater();
-            Document domToSend = dc.createDOM(Long.toString(System.currentTimeMillis()),therm,"Celsius");
+            Document domToSend = dc.createDOM(Long.toString(System.currentTimeMillis()), therm, "Celsius");
 
             //Waiting for 3 seconds before next send
             try {
@@ -30,25 +54,21 @@ public class Client {
             }
 
             //Setting up socket connection
-            ObjectOutputStream oos;
-            String ip = args[0];
-            Socket s = null ;
 
-            try{
-                s = new Socket(ip,5056) ;
-                OutputStream outStream = s.getOutputStream() ;
+            try {
+
+                OutputStream outStream = s.getOutputStream();
                 System.out.println("Connected to : " + s);
 
                 //SENDFILE
-
-                oos = new ObjectOutputStream(s.getOutputStream( ));
+                oos = new ObjectOutputStream(s.getOutputStream());
                 oos.writeObject(domToSend);
-            }catch (SocketException e) {
-                if (errorCounter >= 3){
+                counter++;
+            } catch (SocketException e) {
+                if (errorCounter >= 3) {
                     System.out.println("\nUnable to connect to the server, the program has been termianted");
                     System.exit(-1);
-                }
-                else {
+                } else {
                     System.out.println("\nError, the server's socket is closed, attempting to reconnect");
                 }
                 errorCounter++;
