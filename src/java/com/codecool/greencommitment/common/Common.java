@@ -9,6 +9,9 @@ import java.util.Scanner;
 public class Common {
 
     public static void main(String[] args) throws IOException {
+        SensorManager sensors = new SensorManager();
+
+        System.out.println("Choose 'client' or 'server' mode:");
 
         Scanner scan = new Scanner(System.in);
         String scanString = scan.nextLine();
