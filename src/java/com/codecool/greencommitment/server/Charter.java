@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
@@ -27,22 +28,22 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 public class Charter extends JFrame {
 
-    public Charter() throws ParserConfigurationException, SAXException, IOException {
+    private XYSeriesCollection dataSet;
 
-        initUI();
-    }
+    public Charter(String[] filename) throws ParserConfigurationException, SAXException, IOException {
 
-    public void initUI() throws IOException, SAXException, ParserConfigurationException {
-
-        XYDataset dataset = createDataset();
-        JFreeChart chart = createChart(dataset);
+        this.dataSet = new XYSeriesCollection();
+        for (int i = 0; i < filename.length; i++) {
+            createDataset(filename[i]);
+        }
+        XYDataset dataset = dataSet;
+        JFreeChart chart = createChart(dataset,filename.length);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         chartPanel.setBackground(Color.white);
@@ -54,20 +55,16 @@ public class Charter extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public XYDataset createDataset() throws ParserConfigurationException, IOException, SAXException {
+    public void createDataset(String filename) throws ParserConfigurationException, IOException, SAXException {
 
-        XYSeries series = new XYSeries("random");
-        List<Integer> times = new ArrayList<>();
-        List<Integer> values = new ArrayList<>();
+        XYSeries series = new XYSeries(filename);
 
-        File fXmlFile = new File("temp.xml");
+        File fXmlFile = new File( filename + ".xml");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(fXmlFile);
         doc.getDocumentElement().normalize();
         NodeList nList = doc.getElementsByTagName("measurement");
-
-        int sizeof = nList.getLength();
 
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp);
@@ -75,28 +72,18 @@ public class Charter extends JFrame {
             Node nValue = nNode.getChildNodes().item(3);
             Node nType = nNode.getChildNodes().item(5);
             long measTime = Long.parseLong(nTime.getTextContent());
-            int measValue = Integer.parseInt(nValue.getTextContent());
+            float measValue = Float.parseFloat(nValue.getTextContent());
             String measType = nType.getTextContent();
 
             series.add(measTime, measValue);
 
         }
 
-        XYSeriesCollection dataSet = new XYSeriesCollection();
-        /*
-        series.add(18, 33);
-        series.add(20, 28);
-        series.add(25, 22);
-        series.add(30, 980);
-        series.add(40, 1410);
-        series.add(50, 2350);
-        */
         dataSet.addSeries(series);
-        return dataSet;
 
     }
 
-    public JFreeChart createChart(XYDataset dataSet) {
+    public JFreeChart createChart(XYDataset dataSet, int numberOfLines) {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
                 "Team1 Random Measurement",
@@ -112,8 +99,13 @@ public class Charter extends JFrame {
         XYPlot plot = chart.getXYPlot();
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesStroke(0, new BasicStroke(1.5f));
+
+        Random rand = new Random();
+        for (int j = 0; j < numberOfLines; j++){
+
+            renderer.setSeriesPaint(0, new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+            renderer.setSeriesStroke(0, new BasicStroke(1.5f));
+        }
 
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);
@@ -136,8 +128,10 @@ public class Charter extends JFrame {
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-
-        Charter ex = new Charter();
+        String[] arr = new String[2];
+        arr[0] = "6C-88-14-90-FE-F0";
+        arr[1] = "64-6E-69-1E-F0-BB";
+        Charter ex = new Charter(arr);
         ex.setVisible(true);
 
     }
