@@ -39,40 +39,34 @@ public class ClientHandler extends Thread {
 
     @Override
     public void run() {
-
-        BufferedInputStream bis;
-        BufferedOutputStream bos;
-        int num;
+        
+        int i = 1;
+        Socket incoming = s;
+        System.out.println("Spawning " + i);
 
         try {
-            int i = 1;
-            Socket incoming = s;
-            System.out.println("Spawning " + i);
-
             try {
-                try {
-                    ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-                    OutputStream outStream = incoming.getOutputStream();
-                    PrintWriter out = new PrintWriter(outStream, true /* autoFlush */);
+                ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+                OutputStream outStream = incoming.getOutputStream();
+                PrintWriter out = new PrintWriter(outStream, true /* autoFlush */);
 
 
-                    out.println("Object received ");
+                out.println("Object received ");
 
-                    //RECIEVE and WRITE FILE
-
+                //RECIEVE and WRITE FILE
+                if (ois.readObject() instanceof String) {
+                    return;
+                } else if (ois.readObject() instanceof Document) {
                     Document domRecieved = (Document) ois.readObject();
-                } finally {
-                    incoming.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
-
 
 
 

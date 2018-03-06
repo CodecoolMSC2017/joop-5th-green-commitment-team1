@@ -13,13 +13,32 @@ import java.util.concurrent.TimeUnit;
 public class Client {
 
     public static void runClient(String[] args) {
+        int counter = 0;
 
         while(true){
-            //Creating the necessary objects
-            DataGenerator dg = new DataGenerator();
-            String therm = dg.measureThermo();
+            //Setting up socket connection
+            ObjectOutputStream oos;
+            String ip = args[0];
+            Socket s = null ;
+
+            String therm = "";
+            if (counter > 3) {
+                therm = "Exit";
+                try{
+                    s = new Socket(ip,5056) ;
+                    oos = new ObjectOutputStream(s.getOutputStream( ));
+                    oos.writeObject(therm);
+                }catch (Exception e) {
+                    System.out.println(e) ;
+                }
+            }else {
+                //Creating the necessary objects
+                DataGenerator dg = new DataGenerator();
+                therm = dg.measureThermo();
+            }
+
             DOMCreater dc = new DOMCreater();
-            Document domToSend = dc.createDOM(Long.toString(System.currentTimeMillis()),therm,"Celsius");
+            Document domToSend = dc.createDOM(Long.toString(System.currentTimeMillis()), therm, "Celsius");
 
             //Waiting for 3 seconds before next send
             try {
@@ -28,20 +47,14 @@ public class Client {
                 e.printStackTrace();
             }
 
-            //Setting up socket connection
-            ObjectOutputStream oos;
-            String ip = args[0];
-            Socket s = null ;
-
             try{
                 s = new Socket(ip,5056) ;
-                OutputStream outStream = s.getOutputStream() ;
                 System.out.println("Connected to : " + s);
 
                 //SENDFILE
-
                 oos = new ObjectOutputStream(s.getOutputStream( ));
                 oos.writeObject(domToSend);
+                counter++;
             }catch (Exception e) {
                 System.out.println(e) ;
             }
