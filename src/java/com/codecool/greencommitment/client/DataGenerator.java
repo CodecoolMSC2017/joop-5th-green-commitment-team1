@@ -6,7 +6,7 @@ public class DataGenerator {
     Random rand = new Random();
 
     public String measureThermo() {
-        XMLWriter XMLW = new XMLWriter();
+        DOMCreater XMLW = new DOMCreater();
         Float minValue = -20.0f;
         Float maxValue = 38.0f;
         Float currentTemp = rand.nextFloat() * (maxValue - minValue) + minValue;

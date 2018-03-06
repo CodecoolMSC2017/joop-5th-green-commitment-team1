@@ -51,33 +51,20 @@ public class ClientHandler extends Thread {
 
             try {
                 try {
-
-                    InputStream inStream = incoming.getInputStream();
+                    ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
                     OutputStream outStream = incoming.getOutputStream();
-
-                    BufferedReader inm = new BufferedReader(new InputStreamReader(inStream));
                     PrintWriter out = new PrintWriter(outStream, true /* autoFlush */);
 
 
-                    out.println("File received ");
+                    out.println("Object received ");
 
                     //RECIEVE and WRITE FILE
-                    byte[] receivedData = new byte[8192];
-                    bis = new BufferedInputStream(incoming.getInputStream());
-                    bos = new BufferedOutputStream(new FileOutputStream("measurements.xml"));
-                    //length = bis.read(receivedData);
-                    while ((num = bis.read(receivedData)) != -1) {
-                        bos.write(receivedData, 0, num);
-                    }
-                    Document recievedDOM = BytesToDOM.parseToDOM(receivedData);
-                    System.out.println("\n\n\n"+recievedDOM.getElementsByTagName("time").item(0).getTextContent()+"\n\n\n");
-                    bos.close();
-                    bis.close();
 
-                    /*File receivedFile = new File("measurements.xml");
-                    long receivedLen = receivedFile.length();
-                    out.println("ACK: Length of received file = " + receivedLen);
-                    System.out.println("Length of received file = " + receivedLen);*/
+                    Document domRecieved = (Document) ois.readObject();
+                    out.println(domRecieved);
+                    System.out.println(domRecieved);
+
+
 
                 } finally {
                     incoming.close();
