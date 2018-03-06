@@ -109,8 +109,8 @@ public class ClientHandler extends Thread {
 
                         DOMSource source = new DOMSource(finalDom);
                         StreamResult result = new StreamResult(f);
-                        transformer.transform(source, result);
                         transformer.setOutputProperty(OutputKeys.INDENT,"yes");
+                        transformer.transform(source, result);
                     } catch (TransformerConfigurationException tce) {
                         System.out.println("* Transformer Factory error");
                         System.out.println(" " + tce.getMessage());
