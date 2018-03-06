@@ -61,11 +61,6 @@ public class ClientHandler extends Thread {
                     //RECIEVE and WRITE FILE
 
                     Document domRecieved = (Document) ois.readObject();
-                    out.println(domRecieved);
-                    System.out.println(domRecieved);
-
-
-
                 } finally {
                     incoming.close();
                 }
