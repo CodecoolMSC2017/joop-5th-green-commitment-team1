@@ -62,17 +62,14 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
         while (true) {
-            try {
-                int i = 1;
 
-                System.out.println("Spawning " + i);
 
                 try {
 
 
                     ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
                     InputStreamReader isr = new InputStreamReader(s.getInputStream());
-                    System.out.println("Object received ");
+                    System.out.println("Object received from: "+s);
 
 
                     Document domRecieved = (Document) ois.readObject();
@@ -92,6 +89,7 @@ public class ClientHandler extends Thread {
                     Node imported = domRecieved.importNode(rRoot, true);
                     finalDom.adoptNode(imported);
                     Element tmpElement = (Element) imported;
+                    tmpElement.getAttributes().removeNamedItem("id");
                     finalDom.getDocumentElement().appendChild(imported);
 
 
@@ -134,9 +132,7 @@ public class ClientHandler extends Thread {
                     break;
                 }
 
-            } catch (Exception w) {
-                w.printStackTrace();
-            }
+
         }
 
         System.out.println("ClientHandler exits");

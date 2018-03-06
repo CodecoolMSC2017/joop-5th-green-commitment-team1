@@ -60,12 +60,13 @@ public class Client {
             try {
 
                 OutputStream outStream = s.getOutputStream();
-                System.out.println("Connected to : " + s);
+
 
                 //SENDFILE
                 oos = new ObjectOutputStream(s.getOutputStream());
                 oos.writeObject(domToSend);
                 counter++;
+                System.out.println("Object sent to: "+s);
             } catch (SocketException e) {
                 if (errorCounter >= 3) {
                     System.out.println("\nUnable to connect to the server, the program has been termianted");
