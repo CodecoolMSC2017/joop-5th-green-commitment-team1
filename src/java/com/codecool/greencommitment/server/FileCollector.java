@@ -16,7 +16,7 @@ public class FileCollector {
         for (int i = 0; i < listOfFiles.length; i++) {
             String temp = listOfFiles[i].getName();
             if (temp.contains(".xml") && !(temp.contains("pom.xml"))){
-                fileNames.add(temp);
+                fileNames.add(temp.replace(".xml", ""));
             }
         }
         return fileNames;
