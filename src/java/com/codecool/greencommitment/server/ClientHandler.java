@@ -1,5 +1,6 @@
 package com.codecool.greencommitment.server;
 
+import com.sun.javafx.tools.packager.JarSignature;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -32,9 +33,7 @@ public class ClientHandler extends Thread {
     Document finalDom;
 
 
-
-
-        // Constructor
+    // Constructor
     public ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos) {
         this.s = s;
         this.dis = dis;
@@ -50,13 +49,13 @@ public class ClientHandler extends Thread {
         }*/
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try{
+        try {
             // use factory to get an instance of document builder
             DocumentBuilder db = dbf.newDocumentBuilder();
             // create instance of DOM
             Document finalDom = db.newDocument();
-            this.finalDom=finalDom;
-        }catch(Exception e){
+            this.finalDom = finalDom;
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -65,83 +64,88 @@ public class ClientHandler extends Thread {
 
     @Override
     public void run() {
-
-        BufferedInputStream bis;
-        BufferedOutputStream bos;
-        int num;
-
-        try {
-            int i = 1;
-            Socket incoming = s;
-            System.out.println("Spawning " + i);
-
+        while (true) {
             try {
+                int i = 1;
+
+                System.out.println("Spawning " + i);
+
+                try {
+
 
                     ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-                    OutputStream outStream = incoming.getOutputStream();
-                    PrintWriter out = new PrintWriter(outStream, true /* autoFlush */);
-
-
-                    out.println("Object received ");
-
+                    InputStreamReader isr = new InputStreamReader(s.getInputStream());
+                    System.out.println("Object received ");
 
 
                     Document domRecieved = (Document) ois.readObject();
 
-                    if(finalDom.getElementsByTagName("measurements").getLength()<1){
+
+                    //System.out.println(domRecieved.getElementsByTagName("time").item(0).getTextContent());
+
+                    if (finalDom.getElementsByTagName("measurements").getLength() < 1) {
                         Element rootE = finalDom.createElement("measurements");
-                        rootE.setAttribute("id",domRecieved.getElementsByTagName("measurement").item(0).getAttributes().item(0).getTextContent());
+                        rootE.setAttribute("id", domRecieved.getElementsByTagName("measurement").item(0).getAttributes().item(0).getTextContent());
                         finalDom.appendChild(rootE);
                     }
 
-                    domRecieved.getElementsByTagName("measurement").item(0).getAttributes().item(0).setNodeValue(null);
 
-                    Node imported = domRecieved.importNode(domRecieved.getFirstChild(),true);
-                    Element e = (Element) imported;
-                    finalDom.getFirstChild().appendChild((e));
+                    Element rRoot = domRecieved.getDocumentElement();
 
-                try {
-                    File f = new File(finalDom.getElementsByTagName("measurements").item(0).getAttributes().item(0).getTextContent()+".xml");
-                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder builder = factory.newDocumentBuilder();
-                    Document document = builder.parse(f);
+                    Node imported = domRecieved.importNode(rRoot, true);
+                    finalDom.adoptNode(imported);
+                    Element tmpElement = (Element) imported;
+                    finalDom.getDocumentElement().appendChild(imported);
 
-                    // Use a Transformer for output
-                    TransformerFactory tFactory =
-                            TransformerFactory.newInstance();
-                    Transformer transformer =
-                            tFactory.newTransformer();
 
-                    DOMSource source = new DOMSource(finalDom);
-                    StreamResult result = new StreamResult(System.out);
-                    transformer.transform(source, result);
-                }catch (TransformerConfigurationException tce) {
-                    System.out.println("* Transformer Factory error");
-                    System.out.println(" " + tce.getMessage());
+                    try {
+                        File f = new File(finalDom.getElementsByTagName("measurements").item(0).getAttributes().item(0).getTextContent() + ".xml");
+                        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                        DocumentBuilder builder = factory.newDocumentBuilder();
 
-                    Throwable x = tce;
-                    if (tce.getException() != null)
-                        x = tce.getException();
-                    x.printStackTrace();
+
+                        // Use a Transformer for output
+                        TransformerFactory tFactory =
+                                TransformerFactory.newInstance();
+                        Transformer transformer =
+                                tFactory.newTransformer();
+
+                        DOMSource source = new DOMSource(finalDom);
+                        StreamResult result = new StreamResult(f);
+                        transformer.transform(source, result);
+                    } catch (TransformerConfigurationException tce) {
+                        System.out.println("* Transformer Factory error");
+                        System.out.println(" " + tce.getMessage());
+
+                        Throwable x = tce;
+                        if (tce.getException() != null)
+                            x = tce.getException();
+                        x.printStackTrace();
+                    } catch (TransformerException te) {
+                        System.out.println("* Transformation error");
+                        System.out.println(" " + te.getMessage());
+
+                        Throwable x = te;
+                        if (te.getException() != null)
+                            x = te.getException();
+                        x.printStackTrace();
+                    }
+
+
+                } catch (Exception e) {
+                    break;
                 }
-                catch (TransformerException te) {
-                    System.out.println("* Transformation error");
-                    System.out.println(" " + te.getMessage());
 
-                    Throwable x = te;
-                    if (te.getException() != null)
-                        x = te.getException();
-                    x.printStackTrace();
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception w) {
+                w.printStackTrace();
             }
-        }catch(Exception e){
-            e.printStackTrace();
         }
+
+        System.out.println("ClientHandler exits");
     }
 }
+
+
 
 
 

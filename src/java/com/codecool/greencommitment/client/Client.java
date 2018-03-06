@@ -30,13 +30,15 @@ public class Client {
             String therm = "";
             if (counter > 3) {
                 therm = "Exit";
+                OutputStreamWriter osw=null;
                 try {
-                    s = new Socket(ip, 5056);
-                    oos = new ObjectOutputStream(s.getOutputStream());
-                    oos.writeObject(therm);
-                } catch (Exception e) {
-                    System.out.println(e);
+                    osw = new OutputStreamWriter(s.getOutputStream());
+                    osw.write(therm);
+                    return;
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+
             } else {
                 //Creating the necessary objects
                 DataGenerator dg = new DataGenerator();
