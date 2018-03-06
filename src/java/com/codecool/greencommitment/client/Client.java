@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 // Client class
 public class Client {
+    private static int errorCounter = 1;
 
     public static void runClient(String[] args) {
 
@@ -42,8 +43,24 @@ public class Client {
 
                 oos = new ObjectOutputStream(s.getOutputStream( ));
                 oos.writeObject(domToSend);
-            }catch (Exception e) {
-                System.out.println(e) ;
+            }catch (SocketException e) {
+                if (errorCounter >= 3){
+                    System.out.println("\nUnable to connect to the server, the program has been termianted");
+                    System.exit(-1);
+                }
+                else {
+                    System.out.println("\nError, the server's socket is closed, attempting to reconnect");
+                }
+                errorCounter++;
+            } catch (UnknownHostException e) {
+                System.out.println("Unknow host");
+                System.exit(-2);
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found by the Client");
+                System.exit(-3);
+            } catch (IOException e) {
+                System.out.println("IOException at the Client side");
+                System.exit(-4);
             }
         }
     }
