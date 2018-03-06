@@ -28,7 +28,7 @@ public class Client {
             ObjectOutputStream oos;
 
             String therm = "";
-            if (counter > 3) {
+            if (counter > 10) {
                 therm = "Exit";
                 OutputStreamWriter osw=null;
                 try {
@@ -50,7 +50,7 @@ public class Client {
 
             //Waiting for 3 seconds before next send
             try {
-                TimeUnit.SECONDS.sleep(3);
+                TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
