@@ -1,5 +1,7 @@
 package com.codecool.greencommitment.server;
 
+import org.w3c.dom.Document;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -67,13 +69,15 @@ public class ClientHandler extends Thread {
                     while ((num = bis.read(receivedData)) != -1) {
                         bos.write(receivedData, 0, num);
                     }
+                    Document recievedDOM = BytesToDOM.parseToDOM(receivedData);
+                    System.out.println("\n\n\n"+recievedDOM.getElementsByTagName("time").item(0).getTextContent()+"\n\n\n");
                     bos.close();
                     bis.close();
 
-                    File receivedFile = new File("measurements.xml");
+                    /*File receivedFile = new File("measurements.xml");
                     long receivedLen = receivedFile.length();
                     out.println("ACK: Length of received file = " + receivedLen);
-                    System.out.println("Length of received file = " + receivedLen);
+                    System.out.println("Length of received file = " + receivedLen);*/
 
                 } finally {
                     incoming.close();

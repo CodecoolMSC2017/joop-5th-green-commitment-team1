@@ -1,5 +1,7 @@
-<measurement>
-    <time></time>
-    <value></value>
-    <type></type>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE measurement SYSTEM "roles.dtd">
+<measurement id="64-6E-69-1E-F0-BB">
+    <time>1520325404796</time>
+    <value>19.348549</value>
+    <type>Celsius</type>
 </measurement>
