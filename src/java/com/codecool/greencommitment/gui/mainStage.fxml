@@ -7,5 +7,6 @@
    <children>
       <Button layoutX="276.0" layoutY="161.0" mnemonicParsing="false" onAction="#setClientScene" text="Client" />
       <Button layoutX="275.0" layoutY="215.0" mnemonicParsing="false" onAction="#setServerScene" text="Server" />
+      <Button layoutX="283.0" layoutY="261.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
    </children>
 </AnchorPane>

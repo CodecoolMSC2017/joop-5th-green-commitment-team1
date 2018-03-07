@@ -48,9 +48,7 @@ public class clientController {
                 String ip = ipTextField.getText();
 
 
-                try
-
-                {
+                try{
                     s = new Socket(ip, 5056);
                 }catch(ConnectException cE){
                     JOptionPane.showMessageDialog(null,"The server is not running");
@@ -133,9 +131,6 @@ public class clientController {
 
     }
 
-    public void print(String value){
-        textArea.setText(textArea.getText()+"\n"+value);
-    }
 
     private void updateStatus(String message){
         if(Platform.isFxApplicationThread()){
