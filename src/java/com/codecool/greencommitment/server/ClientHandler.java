@@ -112,7 +112,6 @@ public class ClientHandler extends Thread {
         System.out.println("ClientHandler exits");
         FileCollector files = new FileCollector(".");
         String[] arr = files.getXMLFileNames();
-        System.out.println(arr.length);
         Charter ex = null;
         try {
             ex = new Charter(arr);

@@ -77,22 +77,17 @@ public class Charter extends JFrame {
             float measValue = Float.parseFloat(nValue.getTextContent());
             String measType = nType.getTextContent();
 
-
             timeList.add(measTime);
             valueList.add(measValue);
-            //series.add(measTime, measValue);
         }
 
         for (int i = (timeList.size() - 1); i >= 0 ; i--) {
             timeList.set(i, (timeList.get(i) - timeList.get(0)));
-
         }
 
         for (int i = 0; i < timeList.size(); i++) {
             series.add(timeList.get(i), valueList.get(i));
-
         }
-
 
         dataSet.addSeries(series);
     }
