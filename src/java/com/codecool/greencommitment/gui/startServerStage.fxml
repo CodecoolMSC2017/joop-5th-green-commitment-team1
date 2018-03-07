@@ -7,8 +7,9 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.greencommitment.gui.serverController">
    <children>
-      <Label layoutX="89.0" layoutY="140.0" text="Port" />
-      <TextField layoutX="26.0" layoutY="173.0" />
-      <Button layoutX="80.0" layoutY="235.0" mnemonicParsing="false" text="Start" />
+      <Label layoutX="289.0" layoutY="140.0" text="Port" />
+      <TextField layoutX="226.0" layoutY="173.0" />
+      <Button layoutX="280.0" layoutY="235.0" mnemonicParsing="false" onAction="#startServer" text="Start" />
+      <Button fx:id="chart" layoutX="260.0" layoutY="283.0" mnemonicParsing="false" onAction="#showChart" text="Show charts" />
    </children>
 </AnchorPane>
