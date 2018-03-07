@@ -102,7 +102,6 @@ public class clientController {
                         //SENDFILE
                         oos = new ObjectOutputStream(s.getOutputStream());
                         oos.writeObject(domToSend);
-
                         counter++;
 
                     } catch (SocketException e) {
@@ -147,7 +146,6 @@ public class clientController {
         Stage stage = (Stage) window.getScene().getWindow();
         stage.setScene(new Scene(root,640,480));
         stage.show();
-
     }
 }
 
