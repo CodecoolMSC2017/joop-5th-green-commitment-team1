@@ -16,11 +16,10 @@ public class SensorManager {
         detectAll();
     }
 
-    public void detectAll(){
+    private void detectAll() {
         List<Cpu> cpus = components.cpus;
 
-        if (cpus != null){
-
+        if (cpus != null) {
 
             for (final Cpu cpu : cpus) {
                 System.out.println("Found CPU component: " + cpu.name);
@@ -33,7 +32,6 @@ public class SensorManager {
                         System.out.println(temp.name + ": " + temp.value + " C");
                     }
 
-
                     //Print fan speed
                     List<Fan> fans = cpu.sensors.fans;
                     for (final Fan fan : fans) {
@@ -43,5 +41,4 @@ public class SensorManager {
             }
         }
     }
-
 }

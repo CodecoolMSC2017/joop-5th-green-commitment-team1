@@ -36,7 +36,7 @@ public class Charter extends JFrame {
 
     private XYSeriesCollection dataSet;
 
-    public Charter(String[] filename) throws ParserConfigurationException, SAXException, IOException {
+    private Charter(String[] filename) throws ParserConfigurationException, SAXException, IOException {
 
         this.dataSet = new XYSeriesCollection();
         for (int i = 0; i < filename.length; i++) {
@@ -55,7 +55,7 @@ public class Charter extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void createDataset(String filename) throws ParserConfigurationException, IOException, SAXException {
+    private void createDataset(String filename) throws ParserConfigurationException, IOException, SAXException {
 
         XYSeries series = new XYSeries(filename);
 
@@ -76,14 +76,12 @@ public class Charter extends JFrame {
             String measType = nType.getTextContent();
 
             series.add(measTime, measValue);
-
         }
 
         dataSet.addSeries(series);
-
     }
 
-    public JFreeChart createChart(XYDataset dataSet, int numberOfLines) {
+    private JFreeChart createChart(XYDataset dataSet, int numberOfLines) {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
                 "Team1 Random Measurement",
@@ -122,9 +120,7 @@ public class Charter extends JFrame {
                         new Font("Serif", java.awt.Font.BOLD, 18)
                 )
         );
-
         return chart;
-
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
@@ -133,6 +129,5 @@ public class Charter extends JFrame {
         arr[1] = "64-6E-69-1E-F0-BB";
         Charter ex = new Charter(arr);
         ex.setVisible(true);
-
     }
 }

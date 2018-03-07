@@ -1,8 +1,5 @@
 package com.codecool.greencommitment.client;
 
-// Java implementation for a client
-// Save file as Client.java
-
 import org.w3c.dom.Document;
 
 import java.io.*;
@@ -13,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class Client {
     private static int errorCounter = 1;
 
-    public static void runClient(String[] args,int numOfMeasurements) {
+    public static void runClient(String[] args, int numOfMeasurements) {
         int counter = 0;
         Socket s = null;
         String ip = args[0];
@@ -30,7 +27,7 @@ public class Client {
             String therm = "";
             if (counter >= numOfMeasurements) {
                 therm = "Exit";
-                OutputStreamWriter osw=null;
+                OutputStreamWriter osw = null;
                 try {
                     osw = new OutputStreamWriter(s.getOutputStream());
                     osw.write(therm);
@@ -38,7 +35,6 @@ public class Client {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             } else {
                 //Creating the necessary objects
                 DataGenerator dg = new DataGenerator();
@@ -58,15 +54,11 @@ public class Client {
             //Setting up socket connection
 
             try {
-
-                OutputStream outStream = s.getOutputStream();
-
-
                 //SENDFILE
                 oos = new ObjectOutputStream(s.getOutputStream());
                 oos.writeObject(domToSend);
                 counter++;
-                System.out.println("Object sent to: "+s);
+                System.out.println("Object sent to: " + s);
             } catch (SocketException e) {
                 if (errorCounter >= 3) {
                     System.out.println("\nUnable to connect to the server, the program has been termianted");

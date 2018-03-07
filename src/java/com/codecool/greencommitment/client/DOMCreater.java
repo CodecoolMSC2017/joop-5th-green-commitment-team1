@@ -41,9 +41,6 @@ public class DOMCreater {
             e = dom.createElement("type");
             e.setTextContent(type);
             rootEle.appendChild(e);
-
-
-
         } catch (ParserConfigurationException pce) {
             System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce);
         }

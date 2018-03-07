@@ -16,13 +16,7 @@ public class GetMac {
             {
                 NetworkInterface network = networkInterfaces.nextElement();
                 byte[] mac = network.getHardwareAddress();
-                if(mac == null)
-                {
-                    continue;
-                }
-                else
-                {
-
+                if(mac != null) {
                     StringBuilder sb = new StringBuilder();
                     for (int i = 0; i < mac.length; i++)
                     {
