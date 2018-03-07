@@ -1,19 +1,30 @@
 package com.codecool.greencommitment.client;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import org.w3c.dom.Document;
+import com.codecool.greencommitment.gui.*;
+
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 // Client class
 public class Client {
     private static int errorCounter = 1;
 
+
+
+
     public static void runClient(String[] args, int numOfMeasurements) {
         int counter = 0;
         Socket s = null;
         String ip = args[0];
+
+
         try {
             s = new Socket(ip, 5056);
         } catch (IOException e) {
@@ -39,6 +50,12 @@ public class Client {
                 //Creating the necessary objects
                 DataGenerator dg = new DataGenerator();
                 therm = dg.measureThermo();
+
+
+
+
+
+
             }
 
             DOMCreater dc = new DOMCreater();

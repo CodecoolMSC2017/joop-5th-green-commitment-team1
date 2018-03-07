@@ -55,12 +55,14 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
         while (true) {
+
             try {
                 ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
                 System.out.println("Object received from: " + s);
 
 
                 Document domRecieved = (Document) ois.readObject();
+
 
 
                 //System.out.println(domRecieved.getElementsByTagName("time").item(0).getTextContent());
@@ -118,3 +120,4 @@ public class ClientHandler extends Thread {
         System.out.println("ClientHandler exits");
     }
 }
+
