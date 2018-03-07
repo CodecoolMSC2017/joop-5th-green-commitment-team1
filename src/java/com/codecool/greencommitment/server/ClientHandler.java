@@ -1,24 +1,18 @@
 package com.codecool.greencommitment.server;
 
-import com.sun.javafx.tools.packager.JarSignature;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.Socket;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class ClientHandler extends Thread {
 
@@ -118,6 +112,19 @@ public class ClientHandler extends Thread {
             }
         }
         System.out.println("ClientHandler exits");
+        FileCollector files = new FileCollector(".");
+        String[] arr = files.getXMLFileNames();
+        Charter ex = null;
+        try {
+            ex = new Charter(arr);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ex.setVisible(true);
     }
 }
 
