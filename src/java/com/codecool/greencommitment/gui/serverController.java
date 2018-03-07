@@ -20,16 +20,16 @@ public class serverController {
     private Parent root;
     @FXML
     AnchorPane window;
-    Thread t;
+    Thread tr;
     public void startServer()throws Exception{
-        t = new Thread(()-> {
+        tr = new Thread(()-> {
             JOptionPane.showMessageDialog(null, "The server is running");
             try {
                 Server.runServer();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });t.start();
+        });tr.start();
     }
 
     public void showChart(){
@@ -55,7 +55,9 @@ public class serverController {
         stage.show();
     }
 
-    public void stopServer(){
+    public void stopServer() throws Exception {
+        Server.stopServer();
+        JOptionPane.showMessageDialog(null,"Server has shut down");
 
     }
 }

@@ -15,7 +15,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 
+import javax.swing.*;
 import java.io.*;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -37,93 +39,96 @@ public class clientController {
     AnchorPane window;
 
     public void connect(){
-        Thread t = new Thread(()->{
+
+            Thread t = new Thread(() -> {
 
 
-            int counter = 0;
-            Socket s = null;
-            String ip = ipTextField.getText();
+                int counter = 0;
+                Socket s = null;
+                String ip = ipTextField.getText();
 
 
-        try
+                try
 
-            {
-                s = new Socket(ip, 5056);
-            } catch(
-            IOException e)
-
-            {
-                e.printStackTrace();
-            }
-
-        while(true)
-
-            {
-                //Setting up socket connection
-                ObjectOutputStream oos;
-
-
-                String therm = "";
-                if (counter >= Integer.parseInt(numOfMeasurementsTextField.getText())) {
-                    therm = "Exit";
-                    OutputStreamWriter osw = null;
-                    try {
-                        osw = new OutputStreamWriter(s.getOutputStream());
-                        osw.write(therm);
-
-                        return;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    //Creating the necessary objects
-                    DataGenerator dg = new DataGenerator();
-                    therm = dg.measureThermo();
-                    updateStatus("Value sent to "+s.getInetAddress()+":  "+therm+" C");
-
-
-                }
-
-                DOMCreater dc = new DOMCreater();
-                Document domToSend = dc.createDOM(Long.toString(System.currentTimeMillis()), therm, "Celsius");
-
-                //Waiting for 3 seconds before next send
-                try {
-                    TimeUnit.MILLISECONDS.sleep(300);
-                } catch (InterruptedException e) {
+                {
+                    s = new Socket(ip, 5056);
+                }catch(ConnectException cE){
+                    JOptionPane.showMessageDialog(null,"The server is not running");
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                //Setting up socket connection
 
-                try {
-                    //SENDFILE
-                    oos = new ObjectOutputStream(s.getOutputStream());
-                    oos.writeObject(domToSend);
 
-                    counter++;
+                while (true)
 
-                } catch (SocketException e) {
-                    if (errorCounter >= 3) {
-                        System.out.println("\nUnable to connect to the server, the program has been termianted");
-                        System.exit(-1);
+                {
+                    //Setting up socket connection
+                    ObjectOutputStream oos;
+
+
+                    String therm = "";
+                    if (counter >= Integer.parseInt(numOfMeasurementsTextField.getText())) {
+                        therm = "Exit";
+                        OutputStreamWriter osw = null;
+                        try {
+                            osw = new OutputStreamWriter(s.getOutputStream());
+                            osw.write(therm);
+
+                            return;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     } else {
-                        System.out.println("\nError, the server's socket is closed, attempting to reconnect");
-                    }
-                    errorCounter++;
-                } catch (UnknownHostException e) {
-                    System.out.println("Unknow host");
-                    System.exit(-2);
-                } catch (FileNotFoundException e) {
-                    System.out.println("File not found by the Client");
-                    System.exit(-3);
-                } catch (IOException e) {
-                    System.out.println("IOException at the Client side");
-                    System.exit(-4);
-                }
-            }
-        });t.start();
+                        //Creating the necessary objects
+                        DataGenerator dg = new DataGenerator();
+                        therm = dg.measureThermo();
+                        updateStatus("Value sent to " + s.getInetAddress() + ":  " + therm + " C");
 
+
+                    }
+
+                    DOMCreater dc = new DOMCreater();
+                    Document domToSend = dc.createDOM(Long.toString(System.currentTimeMillis()), therm, "Celsius");
+
+                    //Waiting for 3 seconds before next send
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Setting up socket connection
+
+                    try {
+                        //SENDFILE
+                        oos = new ObjectOutputStream(s.getOutputStream());
+                        oos.writeObject(domToSend);
+
+                        counter++;
+
+                    } catch (SocketException e) {
+                        if (errorCounter >= 3) {
+                            System.out.println("\nUnable to connect to the server, the program has been termianted");
+                            System.exit(-1);
+                        } else {
+                            System.out.println("\nError, the server's socket is closed, attempting to reconnect");
+                        }
+                        errorCounter++;
+                    } catch (UnknownHostException e) {
+                        System.out.println("Unknow host");
+                        System.exit(-2);
+                    } catch (FileNotFoundException e) {
+                        System.out.println("File not found by the Client");
+                        System.exit(-3);
+                    } catch (IOException e) {
+                        System.out.println("IOException at the Client side");
+                        System.exit(-4);
+                    }
+                }
+            });
+
+            t.start();
 
 
     }
