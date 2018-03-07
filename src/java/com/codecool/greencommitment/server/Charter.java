@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -36,7 +35,7 @@ public class Charter extends JFrame {
 
     private XYSeriesCollection dataSet;
 
-    private Charter(String[] filename) throws ParserConfigurationException, SAXException, IOException {
+    public Charter(String[] filename) throws ParserConfigurationException, SAXException, IOException {
 
         this.dataSet = new XYSeriesCollection();
         for (int i = 0; i < filename.length; i++) {
@@ -139,7 +138,7 @@ public class Charter extends JFrame {
         );
         return chart;
     }
-
+    /*
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
         FileCollector files = new FileCollector(".");
         String[] arr = files.getXMLFileNames();
@@ -147,4 +146,5 @@ public class Charter extends JFrame {
         Charter ex = new Charter(arr);
         ex.setVisible(true);
     }
+    */
 }
