@@ -66,6 +66,9 @@ public class Charter extends JFrame {
         doc.getDocumentElement().normalize();
         NodeList nList = doc.getElementsByTagName("measurement");
 
+        ArrayList<Long> timeList = new ArrayList<Long>();
+        ArrayList<Float> valueList = new ArrayList<Float>();
+
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp);
             Node nTime = nNode.getChildNodes().item(1);
@@ -75,8 +78,22 @@ public class Charter extends JFrame {
             float measValue = Float.parseFloat(nValue.getTextContent());
             String measType = nType.getTextContent();
 
-            series.add(measTime, measValue);
+
+            timeList.add(measTime);
+            valueList.add(measValue);
+            //series.add(measTime, measValue);
         }
+
+        for (int i = (timeList.size() - 1); i >= 0 ; i--) {
+            timeList.set(i, (timeList.get(i) - timeList.get(0)));
+
+        }
+
+        for (int i = 0; i < timeList.size(); i++) {
+            series.add(timeList.get(i), valueList.get(i));
+
+        }
+
 
         dataSet.addSeries(series);
     }
@@ -124,9 +141,9 @@ public class Charter extends JFrame {
     }
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        String[] arr = new String[2];
-        arr[0] = "6C-88-14-90-FE-F0";
-        arr[1] = "64-6E-69-1E-F0-BB";
+        FileCollector files = new FileCollector(".");
+        String[] arr = files.getXMLFileNames();
+        System.out.println(arr.length);
         Charter ex = new Charter(arr);
         ex.setVisible(true);
     }

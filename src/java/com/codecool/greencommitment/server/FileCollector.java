@@ -11,7 +11,7 @@ public class FileCollector {
         listOfFiles = folder.listFiles();
     }
 
-    public ArrayList<String> getXMLFileNames() {
+    public String[] getXMLFileNames() {
         ArrayList<String> fileNames = new ArrayList<String>();
         for (int i = 0; i < listOfFiles.length; i++) {
             String temp = listOfFiles[i].getName();
@@ -19,7 +19,8 @@ public class FileCollector {
                 fileNames.add(temp.replace(".xml", ""));
             }
         }
-        return fileNames;
+
+        return fileNames.toArray(new String[0]);
     }
 
     public void printFolderContent(){
