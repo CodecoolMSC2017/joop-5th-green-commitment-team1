@@ -10,10 +10,10 @@ import java.net.Socket;
 public class Server {
     static Thread t;
     static ServerSocket ss;
-    public static void runServer() throws IOException
+    public static void runServer(int port) throws IOException
     {
         // server is listening on port 5056
-        ss = new ServerSocket(5056);
+        ss = new ServerSocket(port);
 
         // running infinite loop for getting
         // client request

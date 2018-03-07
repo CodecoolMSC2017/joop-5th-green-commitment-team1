@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.Chart;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.xml.sax.SAXException;
@@ -19,13 +20,15 @@ import java.io.IOException;
 public class serverController {
     private Parent root;
     @FXML
+    TextField portTextField;
+    @FXML
     AnchorPane window;
     Thread tr;
     public void startServer()throws Exception{
         tr = new Thread(()-> {
             JOptionPane.showMessageDialog(null, "The server is running");
             try {
-                Server.runServer();
+                Server.runServer(Integer.parseInt(portTextField.getText()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

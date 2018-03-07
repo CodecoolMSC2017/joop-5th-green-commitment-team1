@@ -49,7 +49,7 @@ public class clientController {
 
 
                 try{
-                    s = new Socket(ip, 5056);
+                    s = new Socket(ip, Integer.parseInt(portTextField.getText()));
                 }catch(ConnectException cE){
                     JOptionPane.showMessageDialog(null,"The server is not running");
                 } catch (IOException e) {
