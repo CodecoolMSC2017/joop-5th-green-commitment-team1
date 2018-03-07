@@ -51,7 +51,7 @@ public class Charter extends JFrame {
         pack();
         setTitle("Line chart");
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
     private void createDataset(String filename) throws ParserConfigurationException, IOException, SAXException {

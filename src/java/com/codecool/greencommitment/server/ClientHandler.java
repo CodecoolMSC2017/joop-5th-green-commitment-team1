@@ -1,5 +1,11 @@
 package com.codecool.greencommitment.server;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -18,6 +24,9 @@ public class ClientHandler extends Thread {
 
     final private Socket s;
     private Document finalDom;
+    private Parent root;
+    @FXML
+    AnchorPane window;
 
     // Constructor
     ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos) {
@@ -127,5 +136,6 @@ public class ClientHandler extends Thread {
         ex.setVisible(true);
 
     }
+
 }
 

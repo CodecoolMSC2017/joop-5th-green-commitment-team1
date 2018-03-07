@@ -5,11 +5,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.greencommitment.gui.serverController">
+<AnchorPane fx:id="window" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.greencommitment.gui.serverController">
    <children>
-      <Label layoutX="289.0" layoutY="140.0" text="Port" />
-      <TextField layoutX="226.0" layoutY="173.0" />
-      <Button layoutX="280.0" layoutY="235.0" mnemonicParsing="false" onAction="#startServer" text="Start" />
-      <Button fx:id="chart" layoutX="260.0" layoutY="283.0" mnemonicParsing="false" onAction="#showChart" text="Show charts" />
+      <Label layoutX="277.0" layoutY="116.0" text="Port" />
+      <TextField layoutX="214.0" layoutY="149.0" />
+      <Button layoutX="268.0" layoutY="211.0" mnemonicParsing="false" onAction="#startServer" text="Start" />
+      <Button fx:id="chart" layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#showChart" text="Show charts" />
+      <Button layoutX="57.0" layoutY="341.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
    </children>
 </AnchorPane>

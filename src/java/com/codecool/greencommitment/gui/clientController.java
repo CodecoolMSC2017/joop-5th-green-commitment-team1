@@ -5,9 +5,14 @@ import com.codecool.greencommitment.client.DOMCreater;
 import com.codecool.greencommitment.client.DataGenerator;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.w3c.dom.Document;
 
 import java.io.*;
@@ -18,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class clientController {
+    private Parent root;
     static String valueToPrint;
     private static int errorCounter = 1;
 
@@ -27,6 +33,8 @@ public class clientController {
     Label ipLabel,portLabel,numLabel;
     @FXML
     TextArea textArea;
+    @FXML
+    AnchorPane window;
 
     public void connect(){
         Thread t = new Thread(()->{
@@ -130,6 +138,13 @@ public class clientController {
         }else{
             Platform.runLater(()-> textArea.setText(textArea.getText()+"\n"+message));
         }
+    }
+
+    public void goBack()throws Exception{
+        root = FXMLLoader.load(getClass().getResource("mainStage.fxml"));
+        Stage stage = (Stage) window.getScene().getWindow();
+        stage.setScene(new Scene(root,640,480));
+        stage.show();
     }
 }
 
