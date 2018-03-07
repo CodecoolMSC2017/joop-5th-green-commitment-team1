@@ -19,12 +19,12 @@
             <Font name="System Bold" size="12.0" />
          </font></Label>
       <TextField fx:id="portTextField" layoutX="247.0" layoutY="193.0" />
-      <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="246.0" layoutY="238.0" onMouseClicked="#startServer" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="125.0" layoutX="260.0" layoutY="244.0" onMouseClicked="#startServer" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../startButton.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="246.0" layoutY="313.0" onMouseClicked="#showChart" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="125.0" layoutX="260.0" layoutY="319.0" onMouseClicked="#showChart" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../chartButton.png" />
          </image>
