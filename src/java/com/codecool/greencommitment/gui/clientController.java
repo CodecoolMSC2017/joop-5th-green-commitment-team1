@@ -124,6 +124,8 @@ public class clientController {
                         System.exit(-4);
                     }
                 }
+
+
             });
 
             t.start();
@@ -145,6 +147,7 @@ public class clientController {
         Stage stage = (Stage) window.getScene().getWindow();
         stage.setScene(new Scene(root,640,480));
         stage.show();
+
     }
 }
 

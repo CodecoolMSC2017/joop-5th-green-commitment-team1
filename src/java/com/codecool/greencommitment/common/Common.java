@@ -18,7 +18,7 @@ public class Common {
 
 
         if (scanString.equals("server")){
-            Server.runServer();
+            Server.runServer(5056);
 
         } else if(scanString.equals("client")) {
             System.out.println("How many measuerements you want to send ?");
