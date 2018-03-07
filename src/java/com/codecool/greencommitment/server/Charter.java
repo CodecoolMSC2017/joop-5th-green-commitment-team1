@@ -1,8 +1,6 @@
 package com.codecool.greencommitment.server;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,12 +42,13 @@ public class Charter extends JFrame {
         XYDataset dataset = dataSet;
         JFreeChart chart = createChart(dataset,filename.length);
         ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(1280, 720));
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         chartPanel.setBackground(Color.white);
         add(chartPanel);
 
         pack();
-        setTitle("Line chart");
+        setTitle("Green Commitment Chart");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
@@ -96,7 +95,7 @@ public class Charter extends JFrame {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
                 "Team1 Random Measurement",
-                "Time",
+                "Time (ms)",
                 "Temperature (C)",
                 dataSet,
                 PlotOrientation.VERTICAL,
