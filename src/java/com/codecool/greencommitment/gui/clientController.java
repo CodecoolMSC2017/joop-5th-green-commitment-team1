@@ -89,7 +89,7 @@ public class clientController {
 
                 //Waiting for 3 seconds before next send
                 try {
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.MILLISECONDS.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

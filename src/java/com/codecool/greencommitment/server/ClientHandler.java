@@ -133,7 +133,7 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ex.setVisible(true);
+        //ex.setVisible(true);
 
     }
 
