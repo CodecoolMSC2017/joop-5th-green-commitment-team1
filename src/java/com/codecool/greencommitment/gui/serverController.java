@@ -33,7 +33,8 @@ public class serverController {
     ComboBox idChoiceBox;
     Thread tr;
     FileCollector files;
-    public void startServer()throws Exception{
+
+    public void initialize(){
         files = new FileCollector(".");
         String[] tmpArray = files.getXMLFileNames();
         String[] resultArray = new String[files.getXMLFileNames().length+1];
@@ -45,6 +46,10 @@ public class serverController {
         idChoiceBox.setItems(FXCollections.observableArrayList(resultArray
 
         ));
+
+    }
+    public void startServer()throws Exception{
+
         tr = new Thread(()-> {
 
             JOptionPane.showMessageDialog(null, "The server is running");
@@ -88,7 +93,6 @@ public class serverController {
     }
 
     public void stopServer() throws Exception {
-
         Server.stopServer();
         JOptionPane.showMessageDialog(null,"Server has shut down");
 
