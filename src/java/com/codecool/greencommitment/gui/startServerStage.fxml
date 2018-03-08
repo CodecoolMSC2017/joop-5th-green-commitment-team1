@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -7,24 +8,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="window" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.greencommitment.gui.serverController">
+<AnchorPane fx:id="window" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codecool.greencommitment.gui.serverController">
    <children>
       <ImageView fitHeight="488.0" fitWidth="647.0" layoutX="-2.0" pickOnBounds="true">
          <image>
             <Image url="@../background.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="309.0" layoutY="160.0" text="Port">
+      <Label layoutX="310.0" layoutY="41.0" text="Port">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <TextField fx:id="portTextField" layoutX="247.0" layoutY="193.0" />
-      <ImageView fitHeight="150.0" fitWidth="125.0" layoutX="260.0" layoutY="244.0" onMouseClicked="#startServer" pickOnBounds="true" preserveRatio="true">
+      <TextField fx:id="portTextField" layoutX="248.0" layoutY="74.0" />
+      <ImageView fitHeight="150.0" fitWidth="125.0" layoutX="261.0" layoutY="125.0" onMouseClicked="#startServer" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../startButton.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="125.0" layoutX="260.0" layoutY="319.0" onMouseClicked="#showChart" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="125.0" layoutX="261.0" layoutY="191.0" onMouseClicked="#showChart" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../chartButton.png" />
          </image>
@@ -39,5 +40,6 @@
             <Image url="@../stopButton.png" />
          </image>
       </ImageView>
+      <ComboBox fx:id="idChoiceBox" layoutX="248.0" layoutY="258.0" prefWidth="150.0" promptText="Choose an ID" />
    </children>
 </AnchorPane>
